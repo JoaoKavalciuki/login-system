@@ -48,5 +48,20 @@ public void sendVerificationEmail(String url) throws MessagingException, Unsuppo
         messageHelper.setSubject(subject);
         messageHelper.setText(content,  true);
         mailSender.send(message);
-}
+    }
+
+    public void sendPasswordResetEmail(String url) throws  MessagingException, UnsupportedEncodingException{
+        String subject = "Redefina a senha de sua conta book shifter";
+        String senderName = "Projeto Book Shifter";
+        String content = "<p> Olá, " + user.getFirstName() + "</p>"
+                + "<p>Recentemente foi requisitado uma mudança de senha," + " clique no link abaixo para mudar sua senha</p>"
+                + "<a href=\"" + url + "\">Redefinir senha</a>";
+        MimeMessage message = mailSender.createMimeMessage();
+        var messageHelper = new MimeMessageHelper(message);
+        messageHelper.setFrom("book.shifter.brazil@gmail.com", senderName);
+        messageHelper.setTo(user.getEmail());
+        messageHelper.setSubject(subject);
+        messageHelper.setText(content,  true);
+        mailSender.send(message);
+    }
 }
