@@ -2,6 +2,8 @@ package com.loginsystem.loginsystem.user;
 
 import com.loginsystem.loginsystem.exception.UserAlredyExistsException;
 import com.loginsystem.loginsystem.registration.RegistrationRequest;
+import com.loginsystem.loginsystem.registration.password.PasswordResetTokenRepository;
+import com.loginsystem.loginsystem.registration.password.PasswordResetTokenService;
 import com.loginsystem.loginsystem.registration.token.VerificationToken;
 import com.loginsystem.loginsystem.registration.token.VerificationTokenRepository;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,7 @@ public class UserService implements  UserServiceInterface {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final PasswordResetTokenService passwordResetTokenService;
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -69,5 +72,25 @@ public class UserService implements  UserServiceInterface {
         userRepository.save(user);
 
         return "Token validado com sucesso!";
+    }
+
+    public void createUserPasswordResetToken(User user, String token) {
+        passwordResetTokenService.createUserPasswordResetToke(user, token);
+    }
+
+    @Override
+    public String validateResetPasswordToken(String passwordResetToken) {
+        return passwordResetTokenService.validatePasswordResetToken(passwordResetToken);
+    }
+
+    @Override
+    public User findUserByPasswordToken(String passwordResetToken) {
+        return passwordResetTokenService.findUserByPasswordToken(passwordResetToken).get();
+    }
+
+    @Override
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }
