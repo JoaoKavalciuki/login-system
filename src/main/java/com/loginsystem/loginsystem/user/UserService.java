@@ -75,7 +75,7 @@ public class UserService implements  UserServiceInterface {
     }
 
     public void createUserPasswordResetToken(User user, String token) {
-        passwordResetTokenService.createUserPasswordResetToke(user, token);
+        passwordResetTokenService.createUserPasswordResetToken( user, token);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PasswordResetTokenService {
     private final PasswordResetTokenRepository  repository;
-    public void createUserPasswordResetToke(User user, String token){
+    public void createUserPasswordResetToken(User user, String token){
         PasswordResetToken newToken = new PasswordResetToken(token, user);
         repository.save(newToken);
     }

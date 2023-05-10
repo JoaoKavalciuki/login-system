@@ -27,5 +27,5 @@ public class User {
     private String password;
     private String cpf;
     private boolean isEnabled = false;
-        private String role;
+    private String role;
 }
